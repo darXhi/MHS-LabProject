@@ -1,0 +1,22 @@
+{
+  "name": "honkai-star-retail-backend",
+  "version": "1.0.0",
+  "description": "Backend API untuk Honkai Star Retail",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.9.7",
+    "nanoid": "^3.3.7",
+    "google-auth-library": "^9.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
