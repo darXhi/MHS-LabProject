@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS transactions (
 -- Password untuk semua user adalah: password123
 -- Hash bcrypt untuk 'password123'
 INSERT INTO users (username, email, password, role) VALUES
-('admin', 'admin@honkaistar.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
-('user1', 'user1@gmail.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('user2', 'user2@gmail.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user');
+('admin', 'admin@honkaistar.com', 'password123', 'admin'),
+('user1', 'user1@gmail.com', 'password123', 'user'),
+('user2', 'user2@gmail.com', 'password123', 'user');
 
 -- Resource data (galactic resources and light cones)
 INSERT INTO resources (name, type, description, stock, image, price) VALUES

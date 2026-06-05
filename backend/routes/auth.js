@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const { nanoid } = require('nanoid');
 const { OAuth2Client } = require('google-auth-library');
 const db = require('../config/db');
@@ -21,7 +20,7 @@ router.post('/login', (req, res) => {
   }
 
   const query = 'SELECT * FROM users WHERE username = ? OR email = ?';
-  db.query(query, [username, username], async (err, results) => {
+  db.query(query, [username, username], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Server error' });
     }
@@ -32,8 +31,8 @@ router.post('/login', (req, res) => {
 
     const user = results[0];
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    // Cek password langsung (plaintext)
+    if (password !== user.password) {
       return res.status(401).json({ message: 'Username atau password salah' });
     }
 
@@ -78,7 +77,6 @@ router.post('/google', async (req, res) => {
     const payload = ticket.getPayload();
     const googleId = payload['sub'];
     const email = payload['email'];
-    const name = payload['name'];
 
     // Cek apakah user dengan google_id ini sudah ada
     const checkQuery = 'SELECT * FROM users WHERE google_id = ? OR email = ?';
@@ -87,10 +85,8 @@ router.post('/google', async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
       }
 
-      let user = null;
-
       if (results.length > 0) {
-        user = results[0];
+        const user = results[0];
 
         // Update google_id kalau belum ada
         if (!user.google_id) {
@@ -119,10 +115,9 @@ router.post('/google', async (req, res) => {
         // Buat user baru dari Google
         const username = email.split('@')[0] + '_' + Math.floor(Math.random() * 1000);
         const dummyPassword = nanoid(20);
-        const hashedPassword = bcrypt.hashSync(dummyPassword, 10);
 
         const insertQuery = 'INSERT INTO users (username, email, password, role, google_id) VALUES (?, ?, ?, ?, ?)';
-        db.query(insertQuery, [username, email, hashedPassword, 'user', googleId], (err3, insertResult) => {
+        db.query(insertQuery, [username, email, dummyPassword, 'user', googleId], (err3, insertResult) => {
           if (err3) {
             return res.status(500).json({ message: 'Gagal membuat akun baru' });
           }

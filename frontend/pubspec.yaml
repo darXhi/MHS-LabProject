@@ -30,11 +30,11 @@ flutter:
   assets:
     - assets/images/
 
-  fonts:
-    - family: Rajdhani
-      fonts:
-        - asset: assets/fonts/Rajdhani-Regular.ttf
-        - asset: assets/fonts/Rajdhani-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Rajdhani-SemiBold.ttf
-          weight: 600
+  # fonts:
+  #   - family: Rajdhani
+  #     fonts:
+  #       - asset: assets/fonts/Rajdhani-Regular.ttf
+  #       - asset: assets/fonts/Rajdhani-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Rajdhani-SemiBold.ttf
+  #         weight: 600
