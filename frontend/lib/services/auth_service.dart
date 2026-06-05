@@ -73,7 +73,7 @@ class AuthService {
     }
   }
 
-  // Simpan token dan data user ke SharedPreferences
+  // Simpan token dan data user
   Future<void> _saveSession(String token, Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, token);
@@ -106,7 +106,7 @@ class AuthService {
       }
       await _googleSignIn.signOut();
     } catch (e) {
-      // ignore error saat logout
+      print('Error saat logout: $e');
     } finally {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_tokenKey);

@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Cek apakah user sudah login atau belum
 class SplashChecker extends StatefulWidget {
   const SplashChecker({super.key});
 

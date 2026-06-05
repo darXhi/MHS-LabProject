@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-// Base URL backend
 const String baseUrl = 'http://10.0.2.2:3000/api';
-// Ganti dengan IP komputer jika pakai device fisik, contoh: http://192.168.1.5:3000/api
 
-// Google Client ID
-const String googleClientId = 'YOUR_GOOGLE_CLIENT_ID_HERE';
+const String googleClientId = 'AIzaSyBQjHXXpWdMFYC2WQ-pD7D-DbXkFY9HKLs';
 
-// Warna tema Honkai Star Rail
 const Color kPrimaryColor = Color(0xFF1A1A2E);      // dark navy
 const Color kSecondaryColor = Color(0xFF16213E);     // navy gelap
 const Color kAccentColor = Color(0xFF4FC3F7);        // biru langit / stellar blue
@@ -19,10 +15,8 @@ const Color kGoldColor = Color(0xFFFFD700);          // warna emas
 const Color kErrorColor = Color(0xFFEF5350);         // merah error
 const Color kSuccessColor = Color(0xFF66BB6A);       // hijau sukses
 
-// Font yang digunakan
 const String kFontFamily = 'Rajdhani';
 
-// Theme data aplikasi
 ThemeData appTheme() {
   return ThemeData(
     useMaterial3: false,
