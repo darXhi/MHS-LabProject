@@ -77,7 +77,7 @@ honkai-star-retail/
 | id | INT AUTO_INCREMENT | Primary key |
 | username | VARCHAR(100) | Unik |
 | email | VARCHAR(150) | Unik |
-| password | VARCHAR(255) | Hashed bcrypt |
+| password | VARCHAR(255) | Plaintext |
 | role | ENUM('admin','user') | Role pengguna |
 | google_id | VARCHAR(255) | ID dari Google OAuth |
 | created_at | TIMESTAMP | Waktu dibuat |
@@ -193,7 +193,7 @@ honkai-star-retail/
 
 ### Login DB
 - User memasukkan username/email dan password
-- Backend mengecek ke tabel `users` menggunakan bcrypt compare
+- Backend mengecek ke tabel `users`
 - Jika berhasil, generate token 30 karakter alphanumeric menggunakan `nanoid`
 - Token disimpan di tabel `user_tokens`
 - Token dikembalikan ke Flutter dan disimpan di `SharedPreferences`
@@ -300,7 +300,6 @@ flutter run
 |---------|-------|--------|
 | express | ^4.18.2 | Web framework |
 | mysql2 | ^3.9.7 | Koneksi MySQL |
-| bcrypt | ^5.1.1 | Hash & verifikasi password |
 | nanoid | ^3.3.7 | Generate token alphanumeric |
 | google-auth-library | ^9.10.0 | Verifikasi Google ID Token |
 | cors | ^2.8.5 | Cross-Origin Resource Sharing |

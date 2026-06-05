@@ -185,7 +185,7 @@ Tema **Dark Space / Galactic** konsisten dengan nuansa Honkai Star Rail:
 
 ### Backend
 ```
-express, mysql2, bcrypt, nanoid, google-auth-library, cors, dotenv
+express, mysql2, nanoid, google-auth-library, cors, dotenv
 ```
 
 ### Flutter
