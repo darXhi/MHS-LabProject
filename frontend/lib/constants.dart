@@ -33,7 +33,6 @@ ThemeData appTheme() {
       primary: kAccentColor,
       secondary: kAccentDark,
       surface: kSecondaryColor,
-      background: kPrimaryColor,
       error: kErrorColor,
     ),
     appBarTheme: const AppBarTheme(
@@ -71,7 +70,7 @@ ThemeData appTheme() {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: kAccentColor.withOpacity(0.4), width: 1),
+        borderSide: BorderSide(color: kAccentColor.withValues(alpha: 0.4), width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -80,12 +79,12 @@ ThemeData appTheme() {
       labelStyle: const TextStyle(color: kTextMuted, fontFamily: kFontFamily),
       hintStyle: const TextStyle(color: kTextMuted, fontFamily: kFontFamily),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: kCardColor,
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: kAccentColor.withOpacity(0.2), width: 1),
+        side: BorderSide(color: kAccentColor.withValues(alpha: 0.2), width: 1),
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
