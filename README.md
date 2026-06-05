@@ -70,6 +70,7 @@ honkai-star-retail/
 
 ```bash
 cd backend
+cp .env.example .env
 npm install
 node index.js
 ```
