@@ -56,7 +56,6 @@ CREATE TABLE IF NOT EXISTS transactions (
 -- ============================================================
 
 -- Password untuk semua user adalah: password123
--- Hash bcrypt untuk 'password123'
 INSERT INTO users (username, email, password, role) VALUES
 ('admin', 'admin@honkaistar.com', 'password123', 'admin'),
 ('user1', 'user1@gmail.com', 'password123', 'user'),
