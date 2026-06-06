@@ -1,0 +1,31 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.suo
+
+# Backend
+backend/node_modules/
+backend/.env
+
+# Flutter build
+frontend/build/
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/.pub-cache/
+frontend/.pub/
+
+# Android secrets
+frontend/android/local.properties
+frontend/android/app/google-services.json
+frontend/android/key.properties
+frontend/android/app/upload-keystore.jks
+
+# iOS secrets
+frontend/ios/Pods/
+frontend/ios/GoogleService-Info.plist
