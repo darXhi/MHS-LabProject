@@ -31,7 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: kCardColor,
-        title: const Text('Logout', style: TextStyle(color: kTextLight, fontFamily: kFontFamily)),
+        title: const Text('Logout',
+            style: TextStyle(color: kTextLight, fontFamily: kFontFamily)),
         content: const Text(
           'Kamu yakin ingin keluar?',
           style: TextStyle(color: kTextMuted, fontFamily: kFontFamily),
@@ -66,140 +67,154 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
-      body: _user == null
-          ? const Center(child: CircularProgressIndicator(color: kAccentColor))
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
+      body: Container(
+        decoration: BoxDecoration(gradient: kBackgroundGradient),
+        child: _user == null
+            ? const Center(
+                child: CircularProgressIndicator(color: kAccentColor))
+            : SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
 
-                  // Avatar
-                  Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: kCardColor,
-                      border: Border.all(color: kAccentColor, width: 2),
-                    ),
-                    child: const Icon(Icons.person, color: kAccentColor, size: 48),
-                  ),
-
-                  const SizedBox(height: 14),
-
-                  Text(
-                    _user!.username,
-                    style: const TextStyle(
-                      color: kTextLight,
-                      fontFamily: kFontFamily,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  // Role badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: _user!.isAdmin ? kGoldColor.withOpacity(0.15) : kAccentColor.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: _user!.isAdmin ? kGoldColor.withOpacity(0.5) : kAccentColor.withOpacity(0.5),
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kCardColor,
+                        border: Border.all(color: kAccentColor, width: 2),
                       ),
+                      child: const Icon(Icons.person,
+                          color: kAccentColor, size: 48),
                     ),
-                    child: Text(
-                      _user!.isAdmin ? '⭐ Admin' : '👤 User',
-                      style: TextStyle(
-                        color: _user!.isAdmin ? kGoldColor : kAccentColor,
+
+                    const SizedBox(height: 14),
+
+                    Text(
+                      _user!.username,
+                      style: const TextStyle(
+                        color: kTextLight,
                         fontFamily: kFontFamily,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 28),
+                    const SizedBox(height: 4),
 
-                  // Info card
-                  Card(
-                    child: Column(
-                      children: [
-                        _InfoTile(
-                          icon: Icons.person_outline,
-                          label: 'Username',
-                          value: _user!.username,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: _user!.isAdmin
+                            ? kGoldColor.withOpacity(0.15)
+                            : kAccentColor.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: _user!.isAdmin
+                              ? kGoldColor.withOpacity(0.5)
+                              : kAccentColor.withOpacity(0.5),
                         ),
-                        Divider(color: kAccentColor.withOpacity(0.1), height: 1),
-                        _InfoTile(
-                          icon: Icons.email_outlined,
-                          label: 'Email',
-                          value: _user!.email,
+                      ),
+                      child: Text(
+                        _user!.isAdmin ? '⭐ Admin' : '👤 User',
+                        style: TextStyle(
+                          color: _user!.isAdmin ? kGoldColor : kAccentColor,
+                          fontFamily: kFontFamily,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Divider(color: kAccentColor.withOpacity(0.1), height: 1),
-                        _InfoTile(
-                          icon: Icons.shield_outlined,
-                          label: 'Role',
-                          value: _user!.role.toUpperCase(),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 28),
 
-                  // Info aplikasi
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
+                    Card(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Tentang Aplikasi',
-                            style: TextStyle(
-                              color: kAccentColor,
-                              fontFamily: kFontFamily,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          _InfoTile(
+                            icon: Icons.person_outline,
+                            label: 'Username',
+                            value: _user!.username,
                           ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            'Honkai Star Retail adalah aplikasi toko galaktik untuk membeli berbagai resource dan light cone dari dunia Honkai Star Rail.',
-                            style: TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 13, height: 1.5),
+                          Divider(
+                              color: kAccentColor.withOpacity(0.1), height: 1),
+                          _InfoTile(
+                            icon: Icons.email_outlined,
+                            label: 'Email',
+                            value: _user!.email,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Versi: 1.0.0',
-                            style: TextStyle(color: kTextMuted, fontFamily: kFontFamily, fontSize: 12),
+                          Divider(
+                              color: kAccentColor.withOpacity(0.1), height: 1),
+                          _InfoTile(
+                            icon: Icons.shield_outlined,
+                            label: 'Role',
+                            value: _user!.role.toUpperCase(),
                           ),
                         ],
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 28),
+                    const SizedBox(height: 20),
 
-                  // Tombol Logout
-                  SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: ElevatedButton.icon(
-                      onPressed: _doLogout,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kErrorColor,
-                        foregroundColor: Colors.white,
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Tentang Aplikasi',
+                              style: TextStyle(
+                                color: kAccentColor,
+                                fontFamily: kFontFamily,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            const Text(
+                              'Honkai Star Retail adalah aplikasi toko galaktik untuk membeli berbagai resource dan light cone dari dunia Honkai Star Rail.',
+                              style: TextStyle(
+                                  color: kTextLight,
+                                  fontFamily: kFontFamily,
+                                  fontSize: 13,
+                                  height: 1.5),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Versi: 1.0.0',
+                              style: TextStyle(
+                                  color: kTextMuted,
+                                  fontFamily: kFontFamily,
+                                  fontSize: 12),
+                            ),
+                          ],
+                        ),
                       ),
-                      icon: const Icon(Icons.logout),
-                      label: const Text('Logout'),
                     ),
-                  ),
-                ],
+
+                    const SizedBox(height: 28),
+
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48,
+                      child: ElevatedButton.icon(
+                        onPressed: _doLogout,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kErrorColor,
+                          foregroundColor: Colors.white,
+                        ),
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Logout'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }
@@ -209,7 +224,8 @@ class _InfoTile extends StatelessWidget {
   final String label;
   final String value;
 
-  const _InfoTile({required this.icon, required this.label, required this.value});
+  const _InfoTile(
+      {required this.icon, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -222,9 +238,18 @@ class _InfoTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: const TextStyle(color: kTextMuted, fontFamily: kFontFamily, fontSize: 11)),
+              Text(label,
+                  style: const TextStyle(
+                      color: kTextMuted,
+                      fontFamily: kFontFamily,
+                      fontSize: 11)),
               const SizedBox(height: 2),
-              Text(value, style: const TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 14, fontWeight: FontWeight.w600)),
+              Text(value,
+                  style: const TextStyle(
+                      color: kTextLight,
+                      fontFamily: kFontFamily,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600)),
             ],
           ),
         ],

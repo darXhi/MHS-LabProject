@@ -23,9 +23,12 @@ class _ResourceListPageState extends State<ResourceListPage> {
   String? _errorMsg;
   UserModel? _currentUser;
 
-  // Dropdown filter type
   String _selectedType = 'Semua';
-  final List<String> _typeOptions = ['Semua', 'Galactic Resource', 'Light Cone'];
+  final List<String> _typeOptions = [
+    'Semua',
+    'Galactic Resource',
+    'Light Cone'
+  ];
 
   @override
   void initState() {
@@ -58,16 +61,17 @@ class _ResourceListPageState extends State<ResourceListPage> {
       if (type == 'Semua') {
         _filteredResources = _allResources;
       } else {
-        _filteredResources = _allResources.where((r) => r.type == type).toList();
+        _filteredResources =
+            _allResources.where((r) => r.type == type).toList();
       }
     });
   }
 
   String _formatPrice(double price) {
     final formatted = price.toStringAsFixed(0).replaceAllMapped(
-      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-      (m) => '${m[1]}.',
-    );
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (m) => '${m[1]}.',
+        );
     return 'Rp $formatted';
   }
 
@@ -83,101 +87,115 @@ class _ResourceListPageState extends State<ResourceListPage> {
           ),
         ],
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: kAccentColor))
-          : _errorMsg != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        decoration: BoxDecoration(gradient: kBackgroundGradient),
+        child: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(color: kAccentColor))
+            : _errorMsg != null
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.error_outline, color: kErrorColor, size: 48),
+                        const SizedBox(height: 12),
+                        Text(_errorMsg!,
+                            style: const TextStyle(color: kErrorColor)),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                            onPressed: _loadData,
+                            child: const Text('Coba Lagi')),
+                      ],
+                    ),
+                  )
+                : Column(
                     children: [
-                      Icon(Icons.error_outline, color: kErrorColor, size: 48),
-                      const SizedBox(height: 12),
-                      Text(_errorMsg!, style: const TextStyle(color: kErrorColor)),
-                      const SizedBox(height: 16),
-                      ElevatedButton(onPressed: _loadData, child: const Text('Coba Lagi')),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                        color: kSecondaryColor,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Selamat datang, ${_currentUser?.username ?? 'Trailblazer'}!',
+                              style: const TextStyle(
+                                color: kTextLight,
+                                fontFamily: kFontFamily,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Text('Filter: ',
+                                    style: TextStyle(
+                                        color: kTextMuted, fontSize: 13)),
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: kCardColor,
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(
+                                        color: kAccentColor.withOpacity(0.4)),
+                                  ),
+                                  child: DropdownButton<String>(
+                                    value: _selectedType,
+                                    dropdownColor: kCardColor,
+                                    style: const TextStyle(
+                                        color: kTextLight,
+                                        fontFamily: kFontFamily,
+                                        fontSize: 13),
+                                    underline: const SizedBox(),
+                                    isDense: true,
+                                    items: _typeOptions.map((t) {
+                                      return DropdownMenuItem(
+                                          value: t, child: Text(t));
+                                    }).toList(),
+                                    onChanged: (val) {
+                                      if (val != null) _filterByType(val);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Expanded(
+                        child: _filteredResources.isEmpty
+                            ? const Center(
+                                child: Text('Tidak ada resource',
+                                    style: TextStyle(color: kTextMuted)),
+                              )
+                            : ListView.builder(
+                                padding: const EdgeInsets.all(12),
+                                itemCount: _filteredResources.length,
+                                itemBuilder: (context, index) {
+                                  final resource = _filteredResources[index];
+                                  return _ResourceCard(
+                                    resource: resource,
+                                    formatPrice: _formatPrice,
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => ResourceDetailPage(
+                                              resource: resource),
+                                        ),
+                                      );
+                                      _loadData();
+                                    },
+                                  );
+                                },
+                              ),
+                      ),
                     ],
                   ),
-                )
-              : Column(
-                  children: [
-                    // Header greeting
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                      color: kSecondaryColor,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Selamat datang, ${_currentUser?.username ?? 'Trailblazer'}!',
-                            style: const TextStyle(
-                              color: kTextLight,
-                              fontFamily: kFontFamily,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          // Dropdown filter
-                          Row(
-                            children: [
-                              const Text('Filter: ', style: TextStyle(color: kTextMuted, fontSize: 13)),
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: kCardColor,
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(color: kAccentColor.withOpacity(0.4)),
-                                ),
-                                child: DropdownButton<String>(
-                                  value: _selectedType,
-                                  dropdownColor: kCardColor,
-                                  style: const TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 13),
-                                  underline: const SizedBox(),
-                                  isDense: true,
-                                  items: _typeOptions.map((t) {
-                                    return DropdownMenuItem(value: t, child: Text(t));
-                                  }).toList(),
-                                  onChanged: (val) {
-                                    if (val != null) _filterByType(val);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // Daftar resource
-                    Expanded(
-                      child: _filteredResources.isEmpty
-                          ? const Center(
-                              child: Text('Tidak ada resource', style: TextStyle(color: kTextMuted)),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.all(12),
-                              itemCount: _filteredResources.length,
-                              itemBuilder: (context, index) {
-                                final resource = _filteredResources[index];
-                                return _ResourceCard(
-                                  resource: resource,
-                                  formatPrice: _formatPrice,
-                                  onTap: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => ResourceDetailPage(resource: resource),
-                                      ),
-                                    );
-                                    _loadData();
-                                  },
-                                );
-                              },
-                            ),
-                    ),
-                  ],
-                ),
+      ),
     );
   }
 }
@@ -204,7 +222,6 @@ class _ResourceCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              // Image placeholder
               Container(
                 width: 70,
                 height: 70,
@@ -213,10 +230,17 @@ class _ResourceCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: kAccentColor.withOpacity(0.3)),
                 ),
-                child: const Icon(Icons.auto_awesome, color: kAccentColor, size: 32),
+                child: resource.image.isNotEmpty ? ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    'assets/images/${resource.image}',
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Icon(Icons.auto_awesome, color: kAccentColor, size: 32),
+                  ),
+                )
+                : const Icon(Icons.auto_awesome, color: kAccentColor, size: 32),
               ),
               const SizedBox(width: 12),
-              // Info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +256,8 @@ class _ResourceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: kAccentColor.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(4),
@@ -262,7 +287,9 @@ class _ResourceCard extends StatelessWidget {
                         Text(
                           'Stok: ${resource.stock}',
                           style: TextStyle(
-                            color: resource.stock > 0 ? kSuccessColor : kErrorColor,
+                            color: resource.stock > 0
+                                ? kSuccessColor
+                                : kErrorColor,
                             fontFamily: kFontFamily,
                             fontSize: 12,
                           ),
@@ -273,7 +300,7 @@ class _ResourceCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(Icons.chevron_right, color: kTextMuted),
+              const Icon(Icons.info_outline, color: kTextMuted),
             ],
           ),
         ),

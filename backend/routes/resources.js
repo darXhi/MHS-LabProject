@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');
 const { verifyToken, verifyAdmin } = require('../middleware/auth');
 
-// GET /api/resources - ambil semua resource (butuh token)
+
 router.get('/', verifyToken, (req, res) => {
   const query = 'SELECT * FROM resources ORDER BY created_at DESC';
   db.query(query, (err, results) => {
@@ -17,7 +17,7 @@ router.get('/', verifyToken, (req, res) => {
   });
 });
 
-// GET /api/resources/:id - ambil satu resource berdasarkan id (butuh token)
+
 router.get('/:id', verifyToken, (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM resources WHERE id = ?';
@@ -35,7 +35,7 @@ router.get('/:id', verifyToken, (req, res) => {
   });
 });
 
-// POST /api/resources - tambah resource baru (khusus admin)
+
 router.post('/', verifyAdmin, (req, res) => {
   const { name, type, description, stock, image, price } = req.body;
 
@@ -63,7 +63,7 @@ router.post('/', verifyAdmin, (req, res) => {
   });
 });
 
-// PUT /api/resources/:id - update resource (khusus admin)
+
 router.put('/:id', verifyAdmin, (req, res) => {
   const { id } = req.params;
   const { name, type, description, stock, image, price } = req.body;
@@ -92,7 +92,7 @@ router.put('/:id', verifyAdmin, (req, res) => {
   });
 });
 
-// DELETE /api/resources/:id - hapus resource (khusus admin)
+
 router.delete('/:id', verifyAdmin, (req, res) => {
   const { id } = req.params;
   const query = 'DELETE FROM resources WHERE id = ?';

@@ -1,21 +1,189 @@
 import 'package:flutter/material.dart';
 
+
 const String baseUrl = 'http://10.0.2.2:3000/api';
 
-const String googleClientId = 'AIzaSyBQjHXXpWdMFYC2WQ-pD7D-DbXkFY9HKLs';
+const String googleClientId = '547655394474-oqa68cc4620kbj3rcfhdqaes83gltfno.apps.googleusercontent.com';
 
-const Color kPrimaryColor = Color(0xFF1A1A2E);      // dark navy
-const Color kSecondaryColor = Color(0xFF16213E);     // navy gelap
-const Color kAccentColor = Color(0xFF4FC3F7);        // biru langit / stellar blue
-const Color kAccentDark = Color(0xFF0288D1);         // biru lebih gelap
-const Color kCardColor = Color(0xFF1E2A3A);          // card background
-const Color kTextLight = Color(0xFFE0E0E0);          // teks terang
-const Color kTextMuted = Color(0xFF9E9E9E);          // teks abu
-const Color kGoldColor = Color(0xFFFFD700);          // warna emas
-const Color kErrorColor = Color(0xFFEF5350);         // merah error
-const Color kSuccessColor = Color(0xFF66BB6A);       // hijau sukses
 
-const String kFontFamily = 'Rajdhani';
+const Color kPrimaryColor = Color(0xFF111844); 
+const Color kSecondaryColor = Color(0xFF5B69A7); 
+const Color kAccentColor = Color(0xFF88AEEA); 
+const Color kAccentDark = Color(0xFF5B69A7); 
+const Color kCardColor = Color(0xFF1A2654); 
+const Color kTextLight = Color(0xFFDABECE); 
+const Color kTextMuted = Color(0xFF8B9FBD); 
+const Color kGoldColor = Color(0xFFDABECE); 
+const Color kErrorColor = Color(0xFFEF5350); 
+const Color kSuccessColor = Color(0xFF66BB6A); 
+
+
+final List<Map<String, dynamic>> sampleProducts = [
+  {
+    "id": 1,
+    "name": "Stellar Jade",
+    "type": "Galactic Resource",
+    "description": "Premium currency used for special purchases.",
+    "stock": 499,
+    "price": 15000,
+    "image": "stellarjade.jpeg",
+  },
+  {
+    "id": 2,
+    "name": "Acheron Light Cone",
+    "type": "Light Cone",
+    "description": "A powerful light cone associated with Acheron.",
+    "stock": 24,
+    "price": 750000,
+    "image": "archeronlightcone.jpeg",
+  },
+  {
+    "id": 3,
+    "name": "Robin Light Cone",
+    "type": "Light Cone",
+    "description": "A support-oriented light cone for Robin.",
+    "stock": 20,
+    "price": 750000,
+    "image": "robinlightcone.jpeg",
+  },
+  {
+    "id": 4,
+    "name": "Firefly Light Cone",
+    "type": "Light Cone",
+    "description": "A rare light cone featuring Firefly.",
+    "stock": 15,
+    "price": 750000,
+    "image": "fireflylightcone.jpeg",
+  },
+  {
+    "id": 5,
+    "name": "Planetary Rendezvous",
+    "type": "Light Cone",
+    "description": "A light cone that increases team synergy.",
+    "stock": 100,
+    "price": 150000,
+    "image": "planetaryrendezvous.jpeg",
+  },
+  {
+    "id": 6,
+    "name": "Fermata",
+    "type": "Light Cone",
+    "description": "A light cone focused on damage over time.",
+    "stock": 80,
+    "price": 150000,
+    "image": "fermata.jpeg",
+  },
+  {
+    "id": 7,
+    "name": "Sparkle Light Cone",
+    "type": "Light Cone",
+    "description": "A premium light cone used by Sparkle.",
+    "stock": 30,
+    "price": 750000,
+    "image": "sparklelightcone.jpeg",
+  },
+  {
+    "id": 8,
+    "name": "Trailblaze Power",
+    "type": "Galactic Resource",
+    "description": "Energy resource used to claim rewards.",
+    "stock": 200,
+    "price": 5000,
+    "image": "trailblazepower.jpeg",
+  },
+  {
+    "id": 9,
+    "name": "Credit",
+    "type": "Galactic Resource",
+    "description": "Main currency used throughout the galaxy.",
+    "stock": 1000,
+    "price": 1000,
+    "image": "credit.jpeg",
+  },
+  {
+    "id": 10,
+    "name": "Oneiric Shard",
+    "type": "Galactic Resource",
+    "description": "Premium shard used for special exchanges.",
+    "stock": 150,
+    "price": 25000,
+    "image": "oneiricshard.jpeg",
+  },
+  {
+    "id": 11,
+    "name": "Lost Crystal",
+    "type": "Galactic Resource",
+    "description": "A rare crystal with mysterious power.",
+    "stock": 100,
+    "price": 35000,
+    "image": "lostcrystal.jpeg",
+  },
+  {
+    "id": 12,
+    "name": "Memory of Chaos Pass",
+    "type": "Galactic Resource",
+    "description": "Pass required to access Memory of Chaos content.",
+    "stock": 50,
+    "price": 20000,
+    "image": "memoryofchaospass.jpeg",
+  },
+];
+
+
+const LinearGradient kBackgroundGradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    kSecondaryColor,
+    kPrimaryColor,
+  ],
+);
+
+
+const String kFontFamily = 'Roboto';
+
+
+final Map<String, String> productImageMap = {
+  'Stellar Jade': 'stellarjade.jpeg',
+  'Acheron Light Cone': 'archeronlightcone.jpeg',
+  'Robin Light Cone': 'robinlightcone.jpeg',
+  'Firefly Light Cone': 'fireflylightcone.jpeg',
+  'Planetary Rendezvous': 'planetaryrendezvous.jpeg',
+  'Fermata': 'fermata.jpeg',
+  'Sparkle Light Cone': 'sparklelightcone.jpeg',
+  'Trailblaze Power': 'trailblazepower.jpeg',
+  'Credit': 'credit.jpeg',
+  'Oneiric Shard': 'oneiricshard.jpeg',
+  'Lost Crystal': 'lostcrystal.jpeg',
+  'Memory of Chaos Pass': 'memoryofchaospass.jpeg',
+};
+
+String getProductImage(String productName, String? imageFromDb) {
+  if (imageFromDb != null && imageFromDb.isNotEmpty) {
+    return imageFromDb;
+  }
+  return productImageMap[productName] ?? '';
+}
+
+Widget buildProductImageWidget(
+    String productName, String? imageFromDb, double iconSize) {
+  final imagePath = getProductImage(productName, imageFromDb);
+
+  if (imagePath.isNotEmpty) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Image.asset(
+        'assets/images/$imagePath',
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Icon(Icons.auto_awesome, color: kAccentColor, size: iconSize);
+        },
+      ),
+    );
+  } else {
+    return Icon(Icons.auto_awesome, color: kAccentColor, size: iconSize);
+  }
+}
 
 ThemeData appTheme() {
   return ThemeData(
@@ -64,7 +232,8 @@ ThemeData appTheme() {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: kAccentColor.withValues(alpha: 0.4), width: 1),
+        borderSide:
+            BorderSide(color: kAccentColor.withValues(alpha: 0.4), width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -93,11 +262,22 @@ ThemeData appTheme() {
       contentTextStyle: TextStyle(color: kTextLight, fontFamily: kFontFamily),
     ),
     textTheme: const TextTheme(
-      headlineLarge: TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 28, fontWeight: FontWeight.w700),
-      headlineMedium: TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 22, fontWeight: FontWeight.w600),
-      bodyLarge: TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 16),
-      bodyMedium: TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 14),
-      bodySmall: TextStyle(color: kTextMuted, fontFamily: kFontFamily, fontSize: 12),
+      headlineLarge: TextStyle(
+          color: kTextLight,
+          fontFamily: kFontFamily,
+          fontSize: 28,
+          fontWeight: FontWeight.w700),
+      headlineMedium: TextStyle(
+          color: kTextLight,
+          fontFamily: kFontFamily,
+          fontSize: 22,
+          fontWeight: FontWeight.w600),
+      bodyLarge:
+          TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 16),
+      bodyMedium:
+          TextStyle(color: kTextLight, fontFamily: kFontFamily, fontSize: 14),
+      bodySmall:
+          TextStyle(color: kTextMuted, fontFamily: kFontFamily, fontSize: 12),
     ),
   );
 }

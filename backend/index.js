@@ -10,12 +10,12 @@ const transactionRoutes = require('./routes/transactions');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Buat tabel user_tokens kalau belum ada
+
 db.query(`
   CREATE TABLE IF NOT EXISTS user_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -30,17 +30,17 @@ db.query(`
   }
 });
 
-// Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/transactions', transactionRoutes);
 
-// Health check
+
 app.get('/', (req, res) => {
   res.json({ message: 'Honkai Star Retail API is running!' });
 });
 
-// 404 handler
+
 app.use((req, res) => {
   res.status(404).json({ message: 'Endpoint tidak ditemukan' });
 });

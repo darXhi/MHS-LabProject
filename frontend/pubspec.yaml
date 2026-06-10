@@ -12,16 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # HTTP client untuk komunikasi ke backend
   http: ^1.2.1
-
-  # Google Sign In untuk OAuth
   google_sign_in: ^6.2.1
-
-  # Menyimpan data lokal (token, user info)
   shared_preferences: ^2.2.3
-
-  # Icon pack tambahan
   cupertino_icons: ^1.0.6
 
 flutter:
@@ -31,10 +24,11 @@ flutter:
     - assets/images/
 
   # fonts:
-  #   - family: Rajdhani
+  #   - family: Roboto
   #     fonts:
-  #       - asset: assets/fonts/Rajdhani-Regular.ttf
-  #       - asset: assets/fonts/Rajdhani-Bold.ttf
+  #       - asset: assets/fonts/Roboto-Regular.ttf
+  #       - asset: assets/fonts/Roboto-Bold.ttf
   #         weight: 700
-  #       - asset: assets/fonts/Rajdhani-SemiBold.ttf
+  #       - asset: assets/fonts/Roboto-SemiBold.ttf
   #         weight: 600
+  # Download file Roboto terlebih dahulu

@@ -40,9 +40,9 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
 
   String _formatPrice(double price) {
     final formatted = price.toStringAsFixed(0).replaceAllMapped(
-      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-      (m) => '${m[1]}.',
-    );
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (m) => '${m[1]}.',
+        );
     return 'Rp $formatted';
   }
 
@@ -67,103 +67,131 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
           ),
         ],
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: kAccentColor))
-          : _errorMsg != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.error_outline, color: kErrorColor, size: 48),
-                      const SizedBox(height: 12),
-                      Text(_errorMsg!, style: const TextStyle(color: kErrorColor)),
-                      const SizedBox(height: 16),
-                      ElevatedButton(onPressed: _loadTransactions, child: const Text('Coba Lagi')),
-                    ],
-                  ),
-                )
-              : _transactions.isEmpty
-                  ? const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.receipt_long, color: kTextMuted, size: 64),
-                          SizedBox(height: 16),
-                          Text(
-                            'Belum ada transaksi',
-                            style: TextStyle(color: kTextMuted, fontFamily: kFontFamily, fontSize: 16),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Yuk beli resource favoritmu!',
-                            style: TextStyle(color: kTextMuted, fontFamily: kFontFamily, fontSize: 13),
-                          ),
-                        ],
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(12),
-                      itemCount: _transactions.length,
-                      itemBuilder: (context, index) {
-                        final trx = _transactions[index];
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: kSecondaryColor,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: kAccentColor.withOpacity(0.3)),
-                                  ),
-                                  child: const Icon(Icons.auto_awesome, color: kAccentColor, size: 24),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        trx.resourceName,
-                                        style: const TextStyle(
-                                          color: kTextLight,
-                                          fontFamily: kFontFamily,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        'x${trx.quantity} item',
-                                        style: const TextStyle(color: kTextMuted, fontSize: 12, fontFamily: kFontFamily),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        _formatDate(trx.createdAt),
-                                        style: const TextStyle(color: kTextMuted, fontSize: 11),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Text(
-                                  _formatPrice(trx.totalPrice),
-                                  style: const TextStyle(
-                                    color: kGoldColor,
-                                    fontFamily: kFontFamily,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+      body: Container(
+        decoration: BoxDecoration(gradient: kBackgroundGradient),
+        child: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(color: kAccentColor))
+            : _errorMsg != null
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.error_outline,
+                            color: kErrorColor, size: 48),
+                        const SizedBox(height: 12),
+                        Text(_errorMsg!,
+                            style: const TextStyle(color: kErrorColor)),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                            onPressed: _loadTransactions,
+                            child: const Text('Coba Lagi')),
+                      ],
                     ),
+                  )
+                : _transactions.isEmpty
+                    ? const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.receipt_long,
+                                color: kTextMuted, size: 64),
+                            SizedBox(height: 16),
+                            Text(
+                              'Belum ada transaksi',
+                              style: TextStyle(
+                                  color: kTextMuted,
+                                  fontFamily: kFontFamily,
+                                  fontSize: 16),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Yuk beli resource favoritmu!',
+                              style: TextStyle(
+                                  color: kTextMuted,
+                                  fontFamily: kFontFamily,
+                                  fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(12),
+                        itemCount: _transactions.length,
+                        itemBuilder: (context, index) {
+                          final trx = _transactions[index];
+                          return Card(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: kSecondaryColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: kAccentColor.withOpacity(0.3)),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: trx.resourceImage.isNotEmpty ? Image.asset(
+                                        'assets/images/${trx.resourceImage}',
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (_, __, ___) => const Icon(Icons.auto_awesome, color: kAccentColor, size: 24),
+                                      )
+                                      : const Icon(Icons.auto_awesome, color: kAccentColor, size: 24),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          trx.resourceName,
+                                          style: const TextStyle(
+                                            color: kTextLight,
+                                            fontFamily: kFontFamily,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          'x${trx.quantity} item',
+                                          style: const TextStyle(
+                                              color: kTextMuted,
+                                              fontSize: 12,
+                                              fontFamily: kFontFamily),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          _formatDate(trx.createdAt),
+                                          style: const TextStyle(
+                                              color: kTextMuted, fontSize: 11),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                    _formatPrice(trx.totalPrice),
+                                    style: const TextStyle(
+                                      color: kGoldColor,
+                                      fontFamily: kFontFamily,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+      ),
     );
   }
 }

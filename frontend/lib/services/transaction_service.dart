@@ -15,7 +15,6 @@ class TransactionService {
     };
   }
 
-  // Ambil riwayat transaksi user
   Future<List<TransactionModel>> getMyTransactions() async {
     final headers = await _getHeaders();
     final response = await http.get(
@@ -32,7 +31,6 @@ class TransactionService {
     }
   }
 
-  // Beli resource
   Future<Map<String, dynamic>> buyResource(int resourceId, int quantity) async {
     final headers = await _getHeaders();
     final response = await http.post(

@@ -15,7 +15,6 @@ class ResourceService {
     };
   }
 
-  // Ambil semua resource
   Future<List<ResourceModel>> getAllResources() async {
     final headers = await _getHeaders();
     final response = await http.get(
@@ -32,7 +31,6 @@ class ResourceService {
     }
   }
 
-  // Tambah resource baru
   Future<Map<String, dynamic>> addResource(Map<String, dynamic> body) async {
     final headers = await _getHeaders();
     final response = await http.post(
@@ -49,7 +47,6 @@ class ResourceService {
     }
   }
 
-  // Update resource
   Future<Map<String, dynamic>> updateResource(int id, Map<String, dynamic> body) async {
     final headers = await _getHeaders();
     final response = await http.put(
@@ -66,7 +63,6 @@ class ResourceService {
     }
   }
 
-  // Hapus resource
   Future<Map<String, dynamic>> deleteResource(int id) async {
     final headers = await _getHeaders();
     final response = await http.delete(

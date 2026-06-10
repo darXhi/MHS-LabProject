@@ -59,7 +59,6 @@ class _SplashCheckerState extends State<SplashChecker> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Logo / judul
             Text(
               '✦ HONKAI STAR',
               style: TextStyle(

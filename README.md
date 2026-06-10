@@ -92,7 +92,7 @@ flutter pub get
 flutter run
 ```
 
-> **Font Rajdhani** perlu didownload dari [Google Fonts](https://fonts.google.com/specimen/Rajdhani) dan disimpan ke `frontend/assets/fonts/`
+> **Font Roboto** perlu didownload dari [Google Fonts](https://fonts.google.com/specimen/Roboto) dan disimpan ke `frontend/assets/fonts/`
 
 > **Google Sign In** memerlukan `google-services.json` dari Firebase Console dan Google Client ID yang valid di `constants.dart`
 
@@ -178,7 +178,7 @@ Tema **Dark Space / Galactic** konsisten dengan nuansa Honkai Star Rail:
 - **Card**: `#1E2A3A`
 - **Accent**: `#4FC3F7` (Stellar Blue)
 - **Price/Gold**: `#FFD700`
-- **Font**: Rajdhani (Regular, SemiBold, Bold)
+- **Font**: Roboto (Regular, SemiBold, Bold)
 
 ---
 

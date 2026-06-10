@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-// Middleware untuk verifikasi bearer token
+
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
 
@@ -8,13 +8,13 @@ function verifyToken(req, res, next) {
     return res.status(401).json({ message: 'Token tidak ditemukan' });
   }
 
-  const token = authHeader.split(' ')[1]; // format: "Bearer <token>"
+  const token = authHeader.split(' ')[1]; 
 
   if (!token) {
     return res.status(401).json({ message: 'Format token salah' });
   }
 
-  // Cek token di database
+
   const query = 'SELECT u.id, u.username, u.email, u.role FROM users u JOIN user_tokens t ON u.id = t.user_id WHERE t.token = ?';
   db.query(query, [token], (err, results) => {
     if (err) {
@@ -29,7 +29,7 @@ function verifyToken(req, res, next) {
   });
 }
 
-// Middleware khusus untuk cek role admin
+
 function verifyAdmin(req, res, next) {
   verifyToken(req, res, () => {
     if (req.user.role !== 'admin') {

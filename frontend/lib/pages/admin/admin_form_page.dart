@@ -70,7 +70,8 @@ class _AdminFormPageState extends State<AdminFormPage> {
     Map<String, dynamic> result;
 
     if (_isEditing) {
-      result = await _resourceService.updateResource(widget.resourceToEdit!.id, body);
+      result = await _resourceService.updateResource(
+          widget.resourceToEdit!.id, body);
     } else {
       result = await _resourceService.addResource(body);
     }
@@ -96,158 +97,158 @@ class _AdminFormPageState extends State<AdminFormPage> {
       appBar: AppBar(
         title: Text(_isEditing ? 'Edit Resource' : 'Tambah Resource'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Field: Name
-              TextFormField(
-                controller: _nameController,
-                style: const TextStyle(color: kTextLight),
-                decoration: const InputDecoration(
-                  labelText: 'Nama Resource *',
-                  prefixIcon: Icon(Icons.label_outline, color: kAccentColor),
+      body: Container(
+        decoration: BoxDecoration(gradient: kBackgroundGradient),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  style: const TextStyle(color: kTextLight),
+                  decoration: const InputDecoration(
+                    labelText: 'Nama Resource *',
+                    prefixIcon: Icon(Icons.label_outline, color: kAccentColor),
+                  ),
+                  validator: (val) {
+                    if (val == null || val.trim().isEmpty) {
+                      return 'Nama resource tidak boleh kosong';
+                    }
+                    if (val.trim().length < 3) {
+                      return 'Nama minimal 3 karakter';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (val) {
-                  // Validasi 3: nama tidak boleh kosong
-                  if (val == null || val.trim().isEmpty) {
-                    return 'Nama resource tidak boleh kosong';
-                  }
-                  if (val.trim().length < 3) {
-                    return 'Nama minimal 3 karakter';
-                  }
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 14),
 
-              // Dropdown: Type
-              DropdownButtonFormField<String>(
-                value: _selectedType,
-                dropdownColor: kCardColor,
-                style: const TextStyle(color: kTextLight, fontFamily: kFontFamily),
-                decoration: const InputDecoration(
-                  labelText: 'Tipe Resource *',
-                  prefixIcon: Icon(Icons.category_outlined, color: kAccentColor),
+                DropdownButtonFormField<String>(
+                  value: _selectedType,
+                  dropdownColor: kCardColor,
+                  style: const TextStyle(
+                      color: kTextLight, fontFamily: kFontFamily),
+                  decoration: const InputDecoration(
+                    labelText: 'Tipe Resource *',
+                    prefixIcon:
+                        Icon(Icons.category_outlined, color: kAccentColor),
+                  ),
+                  items: _typeOptions.map((t) {
+                    return DropdownMenuItem(value: t, child: Text(t));
+                  }).toList(),
+                  onChanged: (val) {
+                    if (val != null) setState(() => _selectedType = val);
+                  },
+                  validator: (val) {
+                    if (val == null || val.isEmpty) return 'Tipe harus dipilih';
+                    return null;
+                  },
                 ),
-                items: _typeOptions.map((t) {
-                  return DropdownMenuItem(value: t, child: Text(t));
-                }).toList(),
-                onChanged: (val) {
-                  if (val != null) setState(() => _selectedType = val);
-                },
-                validator: (val) {
-                  if (val == null || val.isEmpty) return 'Tipe harus dipilih';
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 14),
 
-              // Field: Description
-              TextFormField(
-                controller: _descriptionController,
-                style: const TextStyle(color: kTextLight),
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: 'Deskripsi',
-                  prefixIcon: Icon(Icons.description_outlined, color: kAccentColor),
-                  alignLabelWithHint: true,
+                TextFormField(
+                  controller: _descriptionController,
+                  style: const TextStyle(color: kTextLight),
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    labelText: 'Deskripsi',
+                    prefixIcon:
+                        Icon(Icons.description_outlined, color: kAccentColor),
+                    alignLabelWithHint: true,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 14),
 
-              // Field: Stock
-              TextFormField(
-                controller: _stockController,
-                keyboardType: TextInputType.number,
-                style: const TextStyle(color: kTextLight),
-                decoration: const InputDecoration(
-                  labelText: 'Stok *',
-                  prefixIcon: Icon(Icons.inventory_2_outlined, color: kAccentColor),
+                TextFormField(
+                  controller: _stockController,
+                  keyboardType: TextInputType.number,
+                  style: const TextStyle(color: kTextLight),
+                  decoration: const InputDecoration(
+                    labelText: 'Stok *',
+                    prefixIcon:
+                        Icon(Icons.inventory_2_outlined, color: kAccentColor),
+                  ),
+                  validator: (val) {
+                    if (val == null || val.trim().isEmpty) {
+                      return 'Stok tidak boleh kosong';
+                    }
+                    final parsed = int.tryParse(val.trim());
+                    if (parsed == null) {
+                      return 'Stok harus berupa angka';
+                    }
+                    if (parsed < 0) {
+                      return 'Stok tidak boleh negatif';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (val) {
-                  // Validasi 4: stok harus angka dan tidak negatif
-                  if (val == null || val.trim().isEmpty) {
-                    return 'Stok tidak boleh kosong';
-                  }
-                  final parsed = int.tryParse(val.trim());
-                  if (parsed == null) {
-                    return 'Stok harus berupa angka';
-                  }
-                  if (parsed < 0) {
-                    return 'Stok tidak boleh negatif';
-                  }
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 14),
 
-              // Field: Image
-              TextFormField(
-                controller: _imageController,
-                style: const TextStyle(color: kTextLight),
-                decoration: const InputDecoration(
-                  labelText: 'Nama File Gambar',
-                  hintText: 'contoh: stellar_jade.png',
-                  prefixIcon: Icon(Icons.image_outlined, color: kAccentColor),
+                TextFormField(
+                  controller: _imageController,
+                  style: const TextStyle(color: kTextLight),
+                  decoration: const InputDecoration(
+                    labelText: 'Nama File Gambar',
+                    hintText: 'contoh: stellar_jade.png',
+                    prefixIcon: Icon(Icons.image_outlined, color: kAccentColor),
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 14),
 
-              // Field: Price
-              TextFormField(
-                controller: _priceController,
-                keyboardType: TextInputType.number,
-                style: const TextStyle(color: kTextLight),
-                decoration: const InputDecoration(
-                  labelText: 'Harga (Rp) *',
-                  prefixIcon: Icon(Icons.payments_outlined, color: kAccentColor),
+                TextFormField(
+                  controller: _priceController,
+                  keyboardType: TextInputType.number,
+                  style: const TextStyle(color: kTextLight),
+                  decoration: const InputDecoration(
+                    labelText: 'Harga (Rp) *',
+                    prefixIcon:
+                        Icon(Icons.payments_outlined, color: kAccentColor),
+                  ),
+                  validator: (val) {
+                    if (val == null || val.trim().isEmpty) {
+                      return 'Harga tidak boleh kosong';
+                    }
+                    final parsed = double.tryParse(val.trim());
+                    if (parsed == null) {
+                      return 'Harga harus berupa angka';
+                    }
+                    if (parsed < 0) {
+                      return 'Harga tidak boleh negatif';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (val) {
-                  // Validasi 5: harga tidak boleh kosong, harus angka, tidak negatif
-                  if (val == null || val.trim().isEmpty) {
-                    return 'Harga tidak boleh kosong';
-                  }
-                  final parsed = double.tryParse(val.trim());
-                  if (parsed == null) {
-                    return 'Harga harus berupa angka';
-                  }
-                  if (parsed < 0) {
-                    return 'Harga tidak boleh negatif';
-                  }
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 28),
+                const SizedBox(height: 28),
 
-              // Tombol Submit
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _submit,
-                  child: _isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : Text(_isEditing ? 'Simpan Perubahan' : 'Tambah Resource'),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _isLoading ? null : _submit,
+                    child: _isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Text(_isEditing
+                            ? 'Simpan Perubahan'
+                            : 'Tambah Resource'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -83,218 +83,223 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 40),
+      body: Container(
+        decoration: BoxDecoration(gradient: kBackgroundGradient),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 40),
 
-                // Header
-                Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        '✦ HONKAI STAR',
-                        style: TextStyle(
-                          fontFamily: kFontFamily,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: kAccentColor,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      Text(
-                        'RETAIL',
-                        style: TextStyle(
-                          fontFamily: kFontFamily,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: kGoldColor,
-                          letterSpacing: 5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 48),
-
-                Text(
-                  'Login',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Masuk untuk melanjutkan perjalanan galaktikmu',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-
-                const SizedBox(height: 24),
-
-                // Error message
-                if (_errorMessage != null)
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: kErrorColor.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: kErrorColor.withOpacity(0.5)),
-                    ),
-                    child: Row(
+                  Center(
+                    child: Column(
                       children: [
-                        const Icon(Icons.error_outline, color: kErrorColor, size: 18),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            _errorMessage!,
-                            style: const TextStyle(color: kErrorColor, fontSize: 14),
+                        Text(
+                          '✦ HONKAI STAR',
+                          style: TextStyle(
+                            fontFamily: kFontFamily,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                            color: kAccentColor,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                        Text(
+                          'RETAIL',
+                          style: TextStyle(
+                            fontFamily: kFontFamily,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: kGoldColor,
+                            letterSpacing: 5,
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                // Username field
-                TextFormField(
-                  controller: _usernameController,
-                  style: const TextStyle(color: kTextLight),
-                  decoration: const InputDecoration(
-                    labelText: 'Username atau Email',
-                    prefixIcon: Icon(Icons.person_outline, color: kAccentColor),
+                  const SizedBox(height: 48),
+
+                  Text(
+                    'Login',
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  validator: (value) {
-                    // Validasi 1: field tidak boleh kosong
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Username tidak boleh kosong';
-                    }
-                    return null;
-                  },
-                ),
-
-                const SizedBox(height: 16),
-
-                // Password field
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  style: const TextStyle(color: kTextLight),
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline, color: kAccentColor),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                        color: kTextMuted,
-                      ),
-                      onPressed: () {
-                        setState(() => _obscurePassword = !_obscurePassword);
-                      },
-                    ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Masuk untuk melanjutkan perjalanan galaktikmu',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  validator: (value) {
-                    // Validasi 2: password minimal 6 karakter
-                    if (value == null || value.isEmpty) {
-                      return 'Password tidak boleh kosong';
-                    }
-                    if (value.length < 6) {
-                      return 'Password minimal 6 karakter';
-                    }
-                    return null;
-                  },
-                ),
 
-                const SizedBox(height: 28),
+                  const SizedBox(height: 24),
 
-                // Tombol Login
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _doLogin,
-                    child: _isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: kPrimaryColor,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : const Text('Login'),
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Divider
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: kTextMuted.withOpacity(0.4))),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('atau', style: Theme.of(context).textTheme.bodySmall),
-                    ),
-                    Expanded(child: Divider(color: kTextMuted.withOpacity(0.4))),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // Tombol Google Login
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: OutlinedButton.icon(
-                    onPressed: _isLoading ? null : _doGoogleLogin,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: kTextLight,
-                      side: BorderSide(color: kAccentColor.withOpacity(0.5)),
-                      shape: RoundedRectangleBorder(
+                  if (_errorMessage != null)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: kErrorColor.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: kErrorColor.withOpacity(0.5)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.error_outline,
+                              color: kErrorColor, size: 18),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              _errorMessage!,
+                              style: const TextStyle(
+                                  color: kErrorColor, fontSize: 14),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    icon: const Icon(Icons.g_mobiledata, size: 24, color: kAccentColor),
-                    label: const Text(
-                      'Lanjutkan dengan Google',
-                      style: TextStyle(fontFamily: kFontFamily, fontSize: 15),
+
+                  TextFormField(
+                    controller: _usernameController,
+                    style: const TextStyle(color: kTextLight),
+                    decoration: const InputDecoration(
+                      labelText: 'Username atau Email',
+                      prefixIcon:
+                          Icon(Icons.person_outline, color: kAccentColor),
                     ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Username tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
-                ),
 
-                const SizedBox(height: 24),
+                  const SizedBox(height: 16),
 
-                // Info akun demo
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: kCardColor,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: kAccentColor.withOpacity(0.2)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Akun Demo:',
-                        style: TextStyle(
-                          color: kAccentColor,
-                          fontFamily: kFontFamily,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _obscurePassword,
+                    style: const TextStyle(color: kTextLight),
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon:
+                          const Icon(Icons.lock_outline, color: kAccentColor),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: kTextMuted,
                         ),
+                        onPressed: () {
+                          setState(() => _obscurePassword = !_obscurePassword);
+                        },
                       ),
-                      const SizedBox(height: 4),
-                      Text('Admin: admin / password123', style: Theme.of(context).textTheme.bodySmall),
-                      Text('User: user1 / password123', style: Theme.of(context).textTheme.bodySmall),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password tidak boleh kosong';
+                      }
+                      if (value.length < 6) {
+                        return 'Password minimal 6 karakter';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _doLogin,
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: kPrimaryColor,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : const Text('Login'),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Divider(color: kTextMuted.withOpacity(0.4))),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text('atau',
+                            style: Theme.of(context).textTheme.bodySmall),
+                      ),
+                      Expanded(
+                          child: Divider(color: kTextMuted.withOpacity(0.4))),
                     ],
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 16),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: OutlinedButton.icon(
+                      onPressed: _isLoading ? null : _doGoogleLogin,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: kTextLight,
+                        side: BorderSide(color: kAccentColor.withOpacity(0.5)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      icon: const Icon(Icons.g_mobiledata,
+                          size: 24, color: kAccentColor),
+                      label: const Text(
+                        'Lanjutkan dengan Google',
+                        style: TextStyle(fontFamily: kFontFamily, fontSize: 15),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: kCardColor,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: kAccentColor.withOpacity(0.2)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Akun Demo:',
+                          style: TextStyle(
+                            color: kAccentColor,
+                            fontFamily: kFontFamily,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text('Admin: admin / password123',
+                            style: Theme.of(context).textTheme.bodySmall),
+                        Text('User: user1 / password123',
+                            style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -6,12 +6,12 @@ const db = require('../config/db');
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// Generate token alphanumeric minimal 20 karakter
+
 function generateToken() {
-  return nanoid(30); // 30 karakter alphanumeric
+  return nanoid(30);
 }
 
-// POST /api/auth/login - login dengan username/password dari DB
+
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -31,15 +31,14 @@ router.post('/login', (req, res) => {
 
     const user = results[0];
 
-    // Cek password langsung (plaintext)
     if (password !== user.password) {
       return res.status(401).json({ message: 'Username atau password salah' });
     }
 
-    // Generate token baru
+
     const token = generateToken();
 
-    // Simpan token ke tabel user_tokens
+
     const saveToken = 'INSERT INTO user_tokens (user_id, token) VALUES (?, ?) ON DUPLICATE KEY UPDATE token = ?';
     db.query(saveToken, [user.id, token, token], (err2) => {
       if (err2) {
@@ -60,7 +59,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-// POST /api/auth/google - login dengan Google OAuth
+
 router.post('/google', async (req, res) => {
   const { idToken } = req.body;
 
@@ -78,7 +77,7 @@ router.post('/google', async (req, res) => {
     const googleId = payload['sub'];
     const email = payload['email'];
 
-    // Cek apakah user dengan google_id ini sudah ada
+
     const checkQuery = 'SELECT * FROM users WHERE google_id = ? OR email = ?';
     db.query(checkQuery, [googleId, email], (err, results) => {
       if (err) {
@@ -88,7 +87,7 @@ router.post('/google', async (req, res) => {
       if (results.length > 0) {
         const user = results[0];
 
-        // Update google_id kalau belum ada
+
         if (!user.google_id) {
           db.query('UPDATE users SET google_id = ? WHERE id = ?', [googleId, user.id]);
         }
@@ -112,7 +111,7 @@ router.post('/google', async (req, res) => {
           });
         });
       } else {
-        // Buat user baru dari Google
+
         const username = email.split('@')[0] + '_' + Math.floor(Math.random() * 1000);
         const dummyPassword = nanoid(20);
 
@@ -150,7 +149,7 @@ router.post('/google', async (req, res) => {
   }
 });
 
-// POST /api/auth/logout
+
 router.post('/logout', (req, res) => {
   const authHeader = req.headers['authorization'];
   if (!authHeader) {

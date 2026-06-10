@@ -14,7 +14,6 @@ class AuthService {
     scopes: ['email', 'profile'],
   );
 
-  // Login dengan username dan password
   Future<Map<String, dynamic>> login(String username, String password) async {
     try {
       final response = await http.post(
@@ -39,7 +38,6 @@ class AuthService {
     }
   }
 
-  // Login dengan Google
   Future<Map<String, dynamic>> loginWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
@@ -73,20 +71,17 @@ class AuthService {
     }
   }
 
-  // Simpan token dan data user
   Future<void> _saveSession(String token, Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, token);
     await prefs.setString(_userKey, jsonEncode(user));
   }
 
-  // Ambil token yang tersimpan
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_tokenKey);
   }
 
-  // Ambil data user yang tersimpan
   Future<UserModel?> getCurrentUser() async {
     final prefs = await SharedPreferences.getInstance();
     final userStr = prefs.getString(_userKey);
@@ -94,7 +89,6 @@ class AuthService {
     return UserModel.fromJson(jsonDecode(userStr));
   }
 
-  // Logout - hapus session
   Future<void> logout() async {
     try {
       final token = await getToken();
@@ -106,7 +100,6 @@ class AuthService {
       }
       await _googleSignIn.signOut();
     } catch (e) {
-      print('Error saat logout: $e');
     } finally {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_tokenKey);
@@ -114,7 +107,6 @@ class AuthService {
     }
   }
 
-  // Cek apakah sudah login
   Future<bool> isLoggedIn() async {
     final token = await getToken();
     return token != null && token.isNotEmpty;
